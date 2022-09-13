@@ -11,7 +11,7 @@ import { SignUp } from "../pages/SignUp";
 import { EditList } from "../pages/EditList";
 
 export const Router = () => {
-  const auth = useSelector((state) => state.auth.isSignIn)
+  const auth = useSelector((state) => state.auth.isSignIn);
 
   return (
     <BrowserRouter>
@@ -27,10 +27,10 @@ export const Router = () => {
             <Route path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
-          <Route path="/signin" element={<SignIn />} />
+          <Route path="*" element={<SignIn />} />
         )}
         <Route element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  )
-}
+  );
+};
