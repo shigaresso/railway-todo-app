@@ -1,6 +1,5 @@
 export const displayLimitTime = (isoTime) => {
   const [date, time] = isoTime.split("T");
-  console.log(`時間は${date}と${time}`);
   const [year, month, day] = date.split("-");
   const [hour, minute] = time.split(":");
   return `${year}年${month}月${day}日 ${hour}時${minute}分`;
