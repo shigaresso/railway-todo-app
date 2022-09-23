@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Home } from "../pages/Home";
 import { NotFound } from "../pages/NotFound";
 import { SignIn } from "../pages/SignIn";
@@ -27,7 +27,7 @@ export const Router = () => {
             <Route path="/lists/:listId/edit" element={<EditList />} />
           </>
         ) : (
-          <Route path="*" element={<SignIn />} />
+          <Route path="*" element={<Navigate to="/signin" replace />} />
         )}
         <Route element={<NotFound />} />
       </Routes>
