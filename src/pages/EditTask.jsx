@@ -4,6 +4,7 @@ import axios from "axios";
 import { useCookies } from "react-cookie";
 import { url } from "../const";
 import { useNavigate, useParams } from "react-router-dom";
+import { convertToLimit } from "../util/convertToLimit";
 import "./editTask.scss";
 
 export const EditTask = () => {
@@ -14,15 +15,25 @@ export const EditTask = () => {
   const [detail, setDetail] = useState("");
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleIsDoneChange = (e) => setIsDone(e.target.value === "done");
+
+  const handleDateChange = (e) => setDate(e.target.value);
+  const handleTimeChange = (e) => setTime(e.target.value);
+
   const onUpdateTask = () => {
     console.log(isDone);
+    const limit = convertToLimit(date, time);
     const data = {
       title,
       detail,
       done: isDone,
+      limit,
     };
 
     axios
@@ -64,9 +75,14 @@ export const EditTask = () => {
       })
       .then((res) => {
         const task = res.data;
+        console.log(task);
         setTitle(task.title);
         setDetail(task.detail);
         setIsDone(task.done);
+
+        const [date, time] = task.limit.split("T");
+        setDate(date);
+        setTime(time.replace(":00Z", ""));
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
@@ -97,6 +113,13 @@ export const EditTask = () => {
             className="edit-task-detail"
             value={detail}
           />
+          <br />
+          <label>期限</label>
+          <br />
+          <div>
+            <input type="date" value={date} onChange={handleDateChange} />
+            <input type="time" value={time} onChange={handleTimeChange} />
+          </div>
           <br />
           <div>
             <input
