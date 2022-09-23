@@ -4,6 +4,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
+import { displayLimitTime, displayRestTime } from "../util/displayLimit";
 import "./home.scss";
 import PropTypes from "prop-types";
 
@@ -13,6 +14,9 @@ export const Home = () => {
   const [selectListId, setSelectListId] = useState();
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const [limit, setLimit] = useState();
+  console.log(limit);
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   useEffect(() => {
@@ -42,6 +46,7 @@ export const Home = () => {
         })
         .then((res) => {
           setTasks(res.data.tasks);
+          setLimit();
         })
         .catch((err) => {
           setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -59,6 +64,7 @@ export const Home = () => {
       })
       .then((res) => {
         setTasks(res.data.tasks);
+        setLimit();
       })
       .catch((err) => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -143,6 +149,8 @@ const Tasks = (props) => {
               >
                 {task.title}
                 <br />
+                {`期限日時：${displayLimitTime(task.limit)}`}
+                <br />
                 {task.done ? "完了" : "未完了"}
               </Link>
             </li>
@@ -164,6 +172,10 @@ const Tasks = (props) => {
               className="task-item-link"
             >
               {task.title}
+              <br />
+              {`期限：${displayLimitTime(task.limit)}`}
+              <br />
+              {`残り日時：${displayRestTime(task.limit)}`}
               <br />
               {task.done ? "完了" : "未完了"}
             </Link>
