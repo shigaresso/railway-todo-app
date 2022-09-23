@@ -14,9 +14,6 @@ export const Home = () => {
   const [selectListId, setSelectListId] = useState();
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const [limit, setLimit] = useState();
-  console.log(limit);
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   useEffect(() => {
@@ -46,7 +43,6 @@ export const Home = () => {
         })
         .then((res) => {
           setTasks(res.data.tasks);
-          setLimit();
         })
         .catch((err) => {
           setErrorMessage(`タスクの取得に失敗しました。${err}`);
@@ -64,7 +60,6 @@ export const Home = () => {
       })
       .then((res) => {
         setTasks(res.data.tasks);
-        setLimit();
       })
       .catch((err) => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);

@@ -3,8 +3,9 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { url } from "../const";
 import { Header } from "../components/Header";
-import "./newTask.scss";
 import { useNavigate } from "react-router-dom";
+import { convertToLimit } from "../util/convertToLimit";
+import "./newTask.scss";
 
 export const NewTask = () => {
   const [selectListId, setSelectListId] = useState();
@@ -24,8 +25,6 @@ export const NewTask = () => {
 
   const handleDateChange = (e) => setDate(e.target.value);
   const handleTimeChange = (e) => setTime(e.target.value);
-
-  const convertToLimit = (date, time) => `${date}T${time}:00Z`;
 
   const onCreateTask = () => {
     const limit = convertToLimit(date, time);
