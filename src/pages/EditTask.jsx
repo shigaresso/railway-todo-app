@@ -48,7 +48,7 @@ export const EditTask = () => {
         },
       })
       .then(() => {
-        navigate.push("/");
+        navigate("/");
       })
       .catch((err) => {
         setErrorMessage(`削除に失敗しました。${err}`);
